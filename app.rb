@@ -22,7 +22,7 @@ begin
 
 pb = PG::Connection.new(pbinfo)
 
-pb.exec ("create table pb (
+pb.exec ("CREATE TABLE public.pb (
 					Id int primary key,
           F_name varchar(50),
           L_name varchar(50),
@@ -32,7 +32,7 @@ pb.exec ("create table pb (
           Zip varchar(5),
           Phone varchar(10))")
 
-pb.exec ("INSERT INTO pb (
+pb.exec ("INSERT INTO public.pb (
 					id,
 			    F_name, L_name, 
 			    Street, City,
@@ -82,8 +82,8 @@ get '/get' do
     rs.clear if rs
     pb.close if pb
 end
-post '/' do
-  erb :return, locals:{list: list}
-end
+# post '/' do
+#   erb :return, locals:{list: list}
+# end
 end
 
