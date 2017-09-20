@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-</head>
-
+	<head>
+		<%=dat%><br>
+	</head>
 
 <body>
-
-
-
-
-
+	<table width = 100%>
+		<tbody>
+			<th>F_name</th>
+			<th>L_name</th>
+			<th>Address</th>
+			<th>City</th>
+			<th>State</th>
+			<th>Zip</th>
+			<th>Phone</th>
+		</tbody>
+			<%dat.each do |rw|%>
+				<tr>
+					<%rw.each do |itm|%>
+						<td><%=itm%></td>
+					<%end%>		
+				</tr>	
+			<%end%>	
+	</table>		
 </body>
 </html>
