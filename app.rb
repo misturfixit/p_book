@@ -29,7 +29,7 @@ get '/return' do
 	  #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$#
 	  pb = PG::Connection.new(pbinfo)
 	  list = pb.exec('SELECT * FROM public.pb') 
-	p "#{list[0]}"
+	#p "#{list[0]}"
 
 	# vals = rs.values
 	# 	list = []
@@ -47,7 +47,7 @@ get '/return' do
  # 	dat = params[:dat]
 	# list = params[:list]
 erb :return, locals:{list:list}
-	end
+	
 end
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 post '/return' do
@@ -56,7 +56,7 @@ post '/return' do
 end
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#	
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
-get '/change'
+get '/update' do
 	awsd = params[:awsd]
 	 pbinfo = {
 		    host: ENV['RDS_HOST'],
@@ -67,6 +67,7 @@ get '/change'
 	  }
 	pb = PG::Connection.new(pbinfo)
 	updt = wb.exec("SELECT * FROM public.pb WHERE id = '#{awsd}'")
-	erb :
+	erb :update, locals:{updt:updt,awsd:awsd}
+	end
 end
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
