@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<% pb_entry = wb.exec("SELECT * FROM public.pb WHERE id='1'") %>
+	<head><h2>Update</h2></head>
+<body>
+	<form method="post" action="update">
+		<label>First Name</label>
+			<input type="text" name="F_name"><br>
+		<label>Last Name</label>
+			<input type="text" name="L_name"><br>
+		<label>Street Address</label>
+			<input type="text" name="Street"><br>
+		<label>City</label>
+			<input type="text" name="City"><br>
+		<label>State</label>
+			<input type="text" name="State"><br>
+		<label>ZipCode</label>
+			<input type="text" name="Zip"><br>
+		<label>Phone Number</label>
+			<input type="text" name="Phone"><br>
+			<input type="submit" value="Submit">
+	</form>
+
+</body>
+</html>
+
+	

@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<%=dat%><br>
-	</head>
 
-<body>
-	<table width = 100%>
-		<tbody>
-			<th>F_name</th>
-			<th>L_name</th>
-			<th>Address</th>
-			<th>City</th>
-			<th>State</th>
-			<th>Zip</th>
-			<th>Phone</th>
-		</tbody>
-			<%dat.each do |rw|%>
-				<tr>
-					<%rw.each do |itm|%>
-						<td><%=itm%></td>
-					<%end%>		
-				</tr>	
-			<%end%>	
-	</table>		
-</body>
+	<body>
+		<table width = 100%>
+			<form method="post" action="return">
+				<%list.each do |row|%>
+					<tr>	
+						<td><%=row['F_name']%></td>
+						<td><%=row['L_name']%></td>
+						<td><%=row['Address']%></td>
+						<td><%=row['City']%></td>
+						<td><%=row['State']%></td>
+						<td><%=row['Zip']%></td>
+						<td><%=row['Phone']%></td>
+					<input type="checkbox" name="awsd" value="<%=row['id']%>">
+					</tr><br>
+				<%end%>	
+		</table>		
+					<input type="submit" value="doit">
+			</form>
+			
+	</body>
 </html>
