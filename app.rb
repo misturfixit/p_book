@@ -3,22 +3,22 @@ require 'pg'
 require_relative 'funk.rb'
 enable 'sessions'
 	load './local_env.rb' if File.exist?('./local_env.rb')
-#+++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++++++++++++++#
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+########################################
 get '/' do
 	erb :input
 end
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+################################
 post '/get_nfo' do
   data = params[:data]
-
+	 #makedabase
+	 add_entry(data)
 
 redirect '/return'
 end
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
-get '/return' do
-	begin
+###############################
+ get '/return' do
+#{}"HELOO WORLD"
+#	begin
 	  pbinfo = {
 		    host: ENV['RDS_HOST'],
 		    port:ENV['RDS_PORT'],
@@ -26,36 +26,25 @@ get '/return' do
 		    user:ENV['RDS_USERNAME'],
 		    password:ENV['RDS_PASSWORD']
 	  }
-	  #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$#
-	  pb = PG::Connection.new(pbinfo)
-	  list = pb.exec('SELECT * FROM public.pb') 
+	  db = PG::Connection.new(pbinfo)
+	  list = db.exec('SELECT * FROM public.pb') 
 	#p "#{list[0]}"
 
-	# vals = rs.values
-	# 	list = []
-	# 	  vals.each do |row|
-	# 	    list << row.values
-	# 	     	list.each do |dat|
-  #     				dat 
-	# 	     	end	
-	# 	  end
-	#{}"%s %s %s %s %s %s %s" %
-  rescue PG::Error => e
-    puts e.message
-  ensure
-    pb.close if pb
+  # rescue PG::Error => e
+  #   puts e.message
+  # ensure
+ #   pb.close if pb
  # 	dat = params[:dat]
-	# list = params[:list]
-erb :return, locals:{list:list}
-	
-end
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+	#list = params[:list]
+	erb :return, locals:{list:list}
+ end
+# #######################################
 post '/return' do
 	awsd = params[:awsd]
+#p "made it to return "
 	redirect '/update?awsd='+awsd
-end
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#	
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+end	
+##########################################
 get '/update' do
 	awsd = params[:awsd]
 	 pbinfo = {
@@ -65,9 +54,40 @@ get '/update' do
 		    user:ENV['RDS_USERNAME'],
 		    password:ENV['RDS_PASSWORD']
 	  }
-	pb = PG::Connection.new(pbinfo)
-	updt = wb.exec("SELECT * FROM public.pb WHERE id = '#{awsd}'")
+	db = PG::Connection.new(pbinfo)
+	updt = db.exec("SELECT * FROM public.pb WHERE id = '#{awsd}'")
 	erb :update, locals:{updt:updt,awsd:awsd}
-	end
 end
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+# #######################################################
+# post '/update' do
+#   awsd = params[:awsd]
+#   f_name = params[:f_name]
+#   l_name = params[:l_name]
+#   street = params[:street]
+#   city = params[:city]
+#   state = params[:state]
+#   zip = params[:zip]
+#   phone = params[:phone]
+# 	radio = params[:radio]
+ 
+#  pbinfo = {
+# 		    host: ENV['RDS_HOST'],
+# 		    port:ENV['RDS_PORT'],
+# 		    dbname:ENV['RDS_DB_NAME'],
+# 		    user:ENV['RDS_USERNAME'],
+# 		    password:ENV['RDS_PASSWORD']
+# 	  }
+# 	pb = PG::Connection.new(pbinfo)
+# 	if radio == 'update'
+#     pb.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',
+# 				     street='#{street}', city='#{city}', 
+# 				     state='#{state}', zip='#{zip}', 
+# 				     phone='#{phone}' WHERE id = '1'"
+# 				    )
+#   elsif radio == 'delete'
+#     pb.exec("DELETE FROM  public.pb WHERE id = '#{qwerty}'")
+#   else radio == 'cancel'
+#     redirect '/'
+#   end
+ #end
+# end

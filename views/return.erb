@@ -6,14 +6,14 @@
 			<form method="post" action="return">
 				<%list.each do |row|%>
 					<tr>	
-						<td><%=row['F_name']%></td>
-						<td><%=row['L_name']%></td>
-						<td><%=row['Address']%></td>
-						<td><%=row['City']%></td>
-						<td><%=row['State']%></td>
-						<td><%=row['Zip']%></td>
-						<td><%=row['Phone']%></td>
-					<input type="checkbox" name="awsd" value="<%=row['id']%>">
+						<td><input type="checkbox" name="awsd" value="<%=row['id']%>"></td>
+						<td><%=row['f_name']%></td>
+						<td><%=row['l_name']%></td>									
+						<td><%=row['street']%></td>
+						<td><%=row['city']%></td>
+						<td><%=row['state']%></td>
+						<td><%=row['zip']%></td>
+						<td><%=row['phone']%></td>
 					</tr><br>
 				<%end%>	
 		</table>		

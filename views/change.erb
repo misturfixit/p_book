@@ -6,19 +6,19 @@
 
 <body>
 	<form method="post" action="changeit">
-	<%updt.each do |updt|%>
-    <input type="hidden" name="awsd" value="<%=awsd%>"> 
-    <input type="text" name="F_name" value="<%=updt['F_name']%>">
-    <input type="text" name="L_name" value="<%=updt['L_name']%>">
-    <input type="text" name="Street" value="<%=updt['Street']%>">
-    <input type="text" name="City" value="<%=updt['City']%>">
-    <input type="text" name="State" value="<%=updt['State']%>">
-    <input type="text" name="Zip" value="<%=updt['Zip']%>">
-    <input type="text" name="Phone" value="<%=updt['Phone']%>">
-    <input type="radio" name="radio" value="update">update
-    <input type="radio" name="radio" value="delete">Delete
-    <input type="radio" name="radio" value="cancel">Cancel
-  <%end%>
+	   <%updt.each do |updt|%>
+        <input type="hidden" name="awsd" value="<%=awsd%>"> 
+        <input type="text" name="f_name" value="<%=updt['f_name']%>">
+        <input type="text" name="l_name" value="<%=updt['l_name']%>">
+        <input type="text" name="street" value="<%=updt['street']%>">
+        <input type="text" name="city" value="<%=updt['city']%>">
+        <input type="text" name="state" value="<%=updt['state']%>">
+        <input type="text" name="zip" value="<%=updt['zip']%>">
+        <input type="text" name="phone" value="<%=updt['phone']%>">
+        <input type="radio" name="radio" value="update">Update
+        <input type="radio" name="radio" value="delete">Delete
+        <input type="radio" name="radio" value="cancel">Cancel
+      <%end%>
 		<input type="submit" value="UpDate">
 	</form>
 </body>

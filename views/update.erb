@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
-<%pb_entry = pb.exec("SELECT * FROM public.pb WHERE id='1'") %>
-	<head><h2>Update</h2></head>
+<%pb_entry = db.exec("SELECT * FROM public.pb WHERE id='1'")%>
+<%pb_entry%>
+		<head><h2>Update</h2></head>
 <body>
 	<form method="post" action="update">
 		<label>First Name</label>
-			<input type="text" name="F_name"><br>
+			<input type="text" name="f_name"><br>
 		<label>Last Name</label>
-			<input type="text" name="L_name"><br>
+			<input type="text" name="l_name"><br>
 		<label>Street Address</label>
-			<input type="text" name="Street"><br>
+			<input type="text" name="street"><br>
 		<label>City</label>
-			<input type="text" name="City"><br>
+			<input type="text" name="city"><br>
 		<label>State</label>
-			<input type="text" name="State"><br>
+			<input type="text" name="state"><br>
 		<label>ZipCode</label>
-			<input type="text" name="Zip"><br>
+			<input type="text" name="zip"><br>
 		<label>Phone Number</label>
-			<input type="text" name="Phone"><br>
-			<input type="submit" value="Submit">
+			<input type="text" name="phone"><br>			
+				<input type="submit" value="Submit">
 	</form>
 
 </body>
