@@ -1,6 +1,16 @@
+head{
+	color:yellow;
+}
 h1{
 	color:red;
 }
 body{
 	text-align:center;
+	background-color: #39ac39;
+}
+td{
+	margin-left:20%;
+	margin-right:20%;
+  border:3px rgb(152,152,152);
+  border-style: ridge;	
 }

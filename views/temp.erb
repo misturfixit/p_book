@@ -1,0 +1,9 @@
+<%db = PG::Connection.new(pbinfo)%>
+	<%pbinfo = {
+		    host: ENV['RDS_HOST'],
+		    port:ENV['RDS_PORT'],
+		    dbname:ENV['RDS_DB_NAME'],
+		    user:ENV['RDS_USERNAME'],
+		    password:ENV['RDS_PASSWORD']
+	  }%>
+	<%updt = db.exec("SELECT * FROM public.pb WHERE id = '[1]'")%>

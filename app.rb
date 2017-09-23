@@ -42,12 +42,12 @@ end
 post '/return' do
 	awsd = params[:awsd]
 #p "made it to return "
-	redirect '/update?awsd='+awsd
+	redirect '/changeit?awsd='+awsd
 end	
 ##########################################
-get '/update' do
+get '/changeit' do
 	awsd = params[:awsd]
-	 pbinfo = {
+	  pbinfo = {
 		    host: ENV['RDS_HOST'],
 		    port:ENV['RDS_PORT'],
 		    dbname:ENV['RDS_DB_NAME'],
@@ -56,38 +56,43 @@ get '/update' do
 	  }
 	db = PG::Connection.new(pbinfo)
 	updt = db.exec("SELECT * FROM public.pb WHERE id = '#{awsd}'")
-	erb :update, locals:{updt:updt,awsd:awsd}
+	erb :change, locals:{updt:updt,awsd:awsd}
 end
 # #######################################################
 # post '/update' do
-#   awsd = params[:awsd]
-#   f_name = params[:f_name]
-#   l_name = params[:l_name]
-#   street = params[:street]
-#   city = params[:city]
-#   state = params[:state]
-#   zip = params[:zip]
-#   phone = params[:phone]
-# 	radio = params[:radio]
+# 	awsd = params[:awsd]
+# 	redirect '/changeit?awsd='+awsd
+# end	
+# # #######################################################
+
+# #######################################################
+# #######################################################
+post '/changeit' do
+  awsd = params[:awsd]
+  f_name = params[:f_name]
+  l_name = params[:l_name]
+  street = params[:street]
+  city = params[:city]
+  state = params[:state]
+  zip = params[:zip]
+  phone = params[:phone]
+	radio = params[:radio]
  
-#  pbinfo = {
-# 		    host: ENV['RDS_HOST'],
-# 		    port:ENV['RDS_PORT'],
-# 		    dbname:ENV['RDS_DB_NAME'],
-# 		    user:ENV['RDS_USERNAME'],
-# 		    password:ENV['RDS_PASSWORD']
-# 	  }
-# 	pb = PG::Connection.new(pbinfo)
-# 	if radio == 'update'
-#     pb.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',
-# 				     street='#{street}', city='#{city}', 
-# 				     state='#{state}', zip='#{zip}', 
-# 				     phone='#{phone}' WHERE id = '1'"
-# 				    )
-#   elsif radio == 'delete'
-#     pb.exec("DELETE FROM  public.pb WHERE id = '#{qwerty}'")
-#   else radio == 'cancel'
-#     redirect '/'
-#   end
- #end
-# end
+ pbinfo = {
+		    host: ENV['RDS_HOST'],
+		    port:ENV['RDS_PORT'],
+		    dbname:ENV['RDS_DB_NAME'],
+		    user:ENV['RDS_USERNAME'],
+		    password:ENV['RDS_PASSWORD']
+	  }
+	pb = PG::Connection.new(pbinfo)
+	if radio == 'update'
+    pb.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',street='#{street}',city='#{city}',state='#{state}',zip='#{zip}',phone='#{phone}' WHERE id = '1'")
+  elsif radio == 'delete'
+  		redirect '/'
+    pb.exec("DELETE FROM  public.pb WHERE id = '#{awsd}'")
+    	redirect '/'
+  else radio == 'cancel'
+    	redirect '/'
+  end
+end

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<h1></h1>
-</head>
+
+	<h1>Change</h1>
+
 
 <body>
 	<form method="post" action="changeit">
-	   <%updt.each do |updt|%>
+	    <%updt.each do |updt|%>
         <input type="hidden" name="awsd" value="<%=awsd%>"> 
         <input type="text" name="f_name" value="<%=updt['f_name']%>">
         <input type="text" name="l_name" value="<%=updt['l_name']%>">
@@ -15,11 +15,11 @@
         <input type="text" name="state" value="<%=updt['state']%>">
         <input type="text" name="zip" value="<%=updt['zip']%>">
         <input type="text" name="phone" value="<%=updt['phone']%>">
-        <input type="radio" name="radio" value="update">Update
-        <input type="radio" name="radio" value="delete">Delete
-        <input type="radio" name="radio" value="cancel">Cancel
+          <input type="radio" name="radio" value="update">Update
+          <input type="radio" name="radio" value="delete">Delete
+          <input type="radio" name="radio" value="cancel">Cancel
       <%end%>
-		<input type="submit" value="UpDate">
+		    <input type="submit" value="UpDate">
 	</form>
 </body>
 </html>
