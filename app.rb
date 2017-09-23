@@ -10,15 +10,12 @@ end
 ################################
 post '/get_nfo' do
   data = params[:data]
-	 #makedabase
+	#makedabase()
 	 add_entry(data)
-
 redirect '/return'
 end
 ###############################
  get '/return' do
-#{}"HELOO WORLD"
-#	begin
 	  pbinfo = {
 		    host: ENV['RDS_HOST'],
 		    port:ENV['RDS_PORT'],
@@ -27,15 +24,7 @@ end
 		    password:ENV['RDS_PASSWORD']
 	  }
 	  db = PG::Connection.new(pbinfo)
-	  list = db.exec('SELECT * FROM public.pb') 
-	#p "#{list[0]}"
-
-  # rescue PG::Error => e
-  #   puts e.message
-  # ensure
- #   pb.close if pb
- # 	dat = params[:dat]
-	#list = params[:list]
+	  list = db.exec('SELECT * FROM public.pb') 	
 	erb :return, locals:{list:list}
  end
 # #######################################
@@ -45,6 +34,16 @@ post '/return' do
 	redirect '/changeit?awsd='+awsd
 end	
 ##########################################
+post '/search' do
+	phown = params[:phown]
+	p "#{phown}..where's my search numberrrrrrrrrrrrrrrrrrebmun"
+	# redirect '/results?phown='+phown
+end	
+# # #######################################################
+get '/results' do
+
+end	
+# #######################################################
 get '/changeit' do
 	awsd = params[:awsd]
 	  pbinfo = {
@@ -58,13 +57,6 @@ get '/changeit' do
 	updt = db.exec("SELECT * FROM public.pb WHERE id = '#{awsd}'")
 	erb :change, locals:{updt:updt,awsd:awsd}
 end
-# #######################################################
-# post '/update' do
-# 	awsd = params[:awsd]
-# 	redirect '/changeit?awsd='+awsd
-# end	
-# # #######################################################
-
 # #######################################################
 # #######################################################
 post '/changeit' do
@@ -85,13 +77,13 @@ post '/changeit' do
 		    user:ENV['RDS_USERNAME'],
 		    password:ENV['RDS_PASSWORD']
 	  }
-	pb = PG::Connection.new(pbinfo)
+	db = PG::Connection.new(pbinfo)
 	if radio == 'update'
-    pb.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',street='#{street}',city='#{city}',state='#{state}',zip='#{zip}',phone='#{phone}' WHERE id = '1'")
+    db.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',street='#{street}',city='#{city}',state='#{state}',zip='#{zip}',phone='#{phone}' WHERE id = '1'")
   elsif radio == 'delete'
-  		redirect '/'
-    pb.exec("DELETE FROM  public.pb WHERE id = '#{awsd}'")
-    	redirect '/'
+  		redirect '/return'
+    db.exec("DELETE FROM  public.pb WHERE id = '#{awsd}'")
+    	redirect '/return'
   else radio == 'cancel'
     	redirect '/'
   end
