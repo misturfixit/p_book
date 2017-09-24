@@ -20,12 +20,12 @@ post '/search' do
 	#result = params[:result].to_s
 	#p "#{result}is this itititititititititit"
 	#p "#{phown}..where's my search numberrrrrrrrrrrrrebmun"
-  redirect '/return?phown='+phown
+	result = searcher(phown)
+  redirect '/return?result='+result
 end	
 ###############################
  get '/return' do
-	phown = params[:phown]
-	result = searcher(phown)
+	result = params[:result]
 	  pbinfo = {
 		    host: ENV['RDS_HOST'],
 		    port:ENV['RDS_PORT'],

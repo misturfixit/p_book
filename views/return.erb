@@ -3,9 +3,24 @@
 				<h1>List </h1>
 	<body>
 		<table width = 90% height = 70%>
+		
 		<h2>search results::<br>
-		<%=result%></h2>
+		<%%>
+			<%result.each do |r| unless result == nil%></h2>
+				<%r.each do |res|%>
+					<%=res%>
+				<%end%>	<br>
+			<%end%>	<br>
+		
 			<form method="post" action="return">
+        	<th>Select</th> 
+          <th>First Name</th> 	
+					<th>Last Name</th>
+					<th>Street Address</th>
+					<th>City</th>
+					<th>State</th>
+					<th>ZipCode</th>
+					<th>Phone Number</th>
 				<%list.each do |row|%>
 					<tr>	
 						<td><input type="checkbox" name="awsd" value="<%=row['id']%>"></td>
@@ -21,7 +36,7 @@
 		</table>		
 						Would you like to update an entry ?<br>
 					<input type="submit" value="doit"><br>
-						No, The list is fine.
+						Nah,..SaulGud
 					  <a href="/">Add another entry or search another number</a><br>
 			</form>
 			
