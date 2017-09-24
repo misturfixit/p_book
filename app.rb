@@ -2,7 +2,7 @@ require 'sinatra'
 require 'pg'
 require_relative 'funk.rb'
 enable 'sessions'
-	load './local_env.rb' if File.exist?('./local_env.rb')
+	load './local_env.rb' if File.exists?('./local_env.rb')
 ########################################
 get '/' do
 	erb :input
@@ -11,11 +11,21 @@ end
 post '/get_nfo' do
   data = params[:data]
 	#makedabase()
-	 add_entry(data)
+	add_entry(data)
 redirect '/return'
 end
+# #######################################################
+post '/search' do
+	phown = params[:phown]
+	#result = params[:result].to_s
+	#p "#{result}is this itititititititititit"
+	#p "#{phown}..where's my search numberrrrrrrrrrrrrebmun"
+  redirect '/return?phown='+phown
+end	
 ###############################
  get '/return' do
+	phown = params[:phown]
+	result = searcher(phown)
 	  pbinfo = {
 		    host: ENV['RDS_HOST'],
 		    port:ENV['RDS_PORT'],
@@ -25,7 +35,7 @@ end
 	  }
 	  db = PG::Connection.new(pbinfo)
 	  list = db.exec('SELECT * FROM public.pb') 	
-	erb :return, locals:{list:list}
+	erb :return, locals:{list:list,result:result}
  end
 # #######################################
 post '/return' do
@@ -34,16 +44,6 @@ post '/return' do
 	redirect '/changeit?awsd='+awsd
 end	
 ##########################################
-post '/search' do
-	phown = params[:phown]
-	p "#{phown}..where's my search numberrrrrrrrrrrrrrrrrrebmun"
-	# redirect '/results?phown='+phown
-end	
-# # #######################################################
-get '/results' do
-
-end	
-# #######################################################
 get '/changeit' do
 	awsd = params[:awsd]
 	  pbinfo = {
@@ -57,6 +57,13 @@ get '/changeit' do
 	updt = db.exec("SELECT * FROM public.pb WHERE id = '#{awsd}'")
 	erb :change, locals:{updt:updt,awsd:awsd}
 end
+# # #######################################################
+# get '/results' do
+# 	phown = params[:phown]
+# 	result = searcher(phown)
+
+# 	erb :change, locals:{result:result}
+# end	
 # #######################################################
 # #######################################################
 post '/changeit' do
@@ -80,6 +87,7 @@ post '/changeit' do
 	db = PG::Connection.new(pbinfo)
 	if radio == 'update'
     db.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',street='#{street}',city='#{city}',state='#{state}',zip='#{zip}',phone='#{phone}' WHERE id = '1'")
+  		redirect '/return'
   elsif radio == 'delete'
   		redirect '/return'
     db.exec("DELETE FROM  public.pb WHERE id = '#{awsd}'")

@@ -43,7 +43,7 @@ def add_entry(data)
 	#db.exec ("INSERT INTO public.pb(f_name,l_name,street,city,state,zip, phone)VALUES('jenny','jenny','ezee st','anything','aaannnddthen','hereitis','thereitis')");
 end		
 ################################################################
-def search(nmbr)
+def searcher(nmbr)
    pbinfo = {
     host: ENV['RDS_HOST'],
     port: ENV['RDS_PORT'],
@@ -53,9 +53,10 @@ def search(nmbr)
   }
   db = PG::Connection.new(pbinfo)
   look = db.exec("SELECT * FROM public.pb WHERE phone = '#{nmbr}'")
-    if look.nmbr_tuples.zero? == false
+    if look.num_tuples.zero? == false
         result =  look.values
     else 
-        result = "Never Heardof 'em" 
+        result = "Never Heardof'em" 
     end     
+  result
 end 

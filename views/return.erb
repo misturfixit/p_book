@@ -3,6 +3,8 @@
 				<h1>List </h1>
 	<body>
 		<table width = 90% height = 70%>
+		<h2>search results::<br>
+		<%=result%></h2>
 			<form method="post" action="return">
 				<%list.each do |row|%>
 					<tr>	
@@ -20,7 +22,7 @@
 						Would you like to update an entry ?<br>
 					<input type="submit" value="doit"><br>
 						No, The list is fine.
-					  <a href="/">Add another entry</a><br>
+					  <a href="/">Add another entry or search another number</a><br>
 			</form>
 			
 	</body>
