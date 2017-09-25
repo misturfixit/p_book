@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'pg'
 require_relative 'funk.rb'
-require 'BCrypt'
+#require 'bcrypt'
 enable 'sessions'
 	load './local_env.rb' if File.exists?('./local_env.rb')
 ########################################
@@ -25,7 +25,7 @@ post '/login' do
   db = PG::Connection.new(wbinfo)
   authusr = db.exec("SELECT * FROM login WHERE u_name ='#{u_n}'")
   val = authusr.values.flatten
-	  hashed_password = BCrypt::Password.create "val[2]"
+	 # hashed_password = BCrypt::Password.create "val[2]"
   if val.include?(p_w)
       redirect '/get_nfo'
   else
