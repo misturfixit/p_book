@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'pg'
 require_relative 'funk.rb'
+require 'BCrypt'
 enable 'sessions'
 	load './local_env.rb' if File.exists?('./local_env.rb')
 ########################################
@@ -9,14 +10,45 @@ get '/' do
 	erb :login, locals:{msg: msg}
 end
 #	erb :input
-################################
+#############################################################
+post '/login' do
+	#makelogintable()
+	u_n = params[:u_n]
+	p_w = params[:p_w]
+	  wbinfo = {
+    host: ENV['RDS_HOST'],
+    port: ENV['RDS_PORT'],
+    dbname: ENV['RDS_DB_NAME'],
+    user: ENV['RDS_USERNAME'],
+    password: ENV['RDS_PASSWORD']
+  }
+  db = PG::Connection.new(wbinfo)
+  authusr = db.exec("SELECT * FROM login WHERE u_name ='#{u_n}'")
+  val = authusr.values.flatten
+	  hashed_password = BCrypt::Password.create "val[2]"
+  if val.include?(p_w)
+      redirect '/get_nfo'
+  else
+      redirect '/'
+  end
+ #  authorize(u_n, p_w)
+ #  msg = params[:msg] || ""
+ #  	if msg == "Logging On"
+	# redirect '/get_nfo?msg='+msg
+	# 	else
+	# redirect '/?msg='+msg
+	# 	end
+end	
+###############################################################
+get '/get_nfo' do
+	#msg = params[:msg]
+	erb :input
+end
+##############################################################
+##################################################################
 post '/get_nfo' do
-	u_name = params[:u_name]
-	p_word = params[:p_word]
   data = params[:data]
 	#makedatable()
-	makelogintable()
-	#authorize(usrname, p_word)
 	add_entry(data)
 redirect '/return'
 end
@@ -26,25 +58,21 @@ post '/search' do
 	#result = params[:result].to_s
 	#p "#{result}is this itititititititititit"
 	#p "#{phown}..where's my search numberrrrrrrrrrrrrebmun"
-	result = searcher(phown)
-  redirect '/return?result='+result
+  redirect '/return?phown='+phown
 end	
 ###############################
- get '/return' do
-	result = params[:result]
-	  pbinfo = {
-		    host: ENV['RDS_HOST'],
-		    port:ENV['RDS_PORT'],
-		    dbname:ENV['RDS_DB_NAME'],
-		    user:ENV['RDS_USERNAME'],
-		    password:ENV['RDS_PASSWORD']
-	  }
-	  db = PG::Connection.new(pbinfo)
-	  list = db.exec('SELECT * FROM public.pb') 	
-	erb :return, locals:{list:list,result:result}
- end
+get '/return' do
+ 	phown = params[:phown]
+	result = searcher(phown)
+ 	result = params[:result]
+	  
+	  list = params[:list]	
+	erb :return, locals:{list:list,result:result} 
+ 	
+end
 # #######################################
 post '/return' do
+	result = params[:result]
 	awsd = params[:awsd]
 #p "made it to return "
 	redirect '/changeit?awsd='+awsd

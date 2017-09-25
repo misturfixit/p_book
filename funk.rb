@@ -1,7 +1,7 @@
 require 'pg'
 # require 'bcrypt'
 	load './local_env.rb' if File.exist?('./local_env.rb')
-###############
+#############################################################
 def makedatable()
 	begin
 	  pbinfo = {
@@ -29,6 +29,7 @@ db.exec ("CREATE TABLE public.pb (
 end	
 ##################################################################
 def makelogintable()
+  begin
     pbinfo = {
       host: ENV['RDS_HOST'],
       port: ENV['RDS_PORT'],
@@ -44,12 +45,11 @@ db.exec ("CREATE TABLE public.login (
   rescue PG::Error => e
      puts e.message
   ensure
-     db.close if db
+  db.close if db
   end
-end 
-
+end  
 ##################################################################
-def authourize(u_name, p_word)
+def authorize(u_n, p_w)
    pbinfo = {
     host: ENV['RDS_HOST'],
     port: ENV['RDS_PORT'],
@@ -58,25 +58,21 @@ def authourize(u_name, p_word)
     password: ENV['RDS_PASSWORD']
   }
   db = PG::Connection.new(pbinfo)
-  auth = db.exec("SELECT * FROM public.login WHERE u_name = '#{u_name}'")
-    if auth.num_tuples.zero? == false
-      whodat = auth.values
-        whodat.each_pair do |u_name, p_word| 
-          if u_name == u_name && p_word == p_word
-             msg = "Logging On"
-          elsif u_name == u_name
-            msg = "Wrong Password"
-          elsif p_word == p_word
-            msg = "Wrong Username"
-      end 
-    end
-      msg = "Wrong Username and Password" 
-  end
+  authusr = db.exec("SELECT * FROM public.login WHERE u_name = '#{u_n}'")
+   if authusr.num_tuples.zero? == false
+    val = authusr.values.flatten
+     
+      if val.include?(password) 
+             redirect '/return'
+         else
+             msg = "Wrong Username"
+      end
+    else  
+         msg = "Wrong Password" 
+    end  
+  db.close if db
 
-    else 
-        message = "Don't know ya" 
-    end     
-  whodat
+     #p "#{v}whatdahelllssgoinonhere"
 end 
 
 ##################################################################
@@ -93,7 +89,8 @@ def add_entry(data)
   db = PG::Connection.new(pbinfo)
   db.exec("INSERT INTO pb(f_name,l_name,street,city,state,zip,phone)VALUES('#{data[0]}','#{data[1]}','#{data[2]}','#{data[3]}','#{data[4]}','#{data[5]}','#{data[6]}')");
 	#db.exec ("INSERT INTO public.pb(f_name,l_name,street,city,state,zip, phone)VALUES('jenny','jenny','ezee st','anything','aaannnddthen','hereitis','thereitis')");
-end		
+db.close if db		
+end
 ######################################################################
 def searcher(nmbr)
    pbinfo = {
@@ -111,6 +108,8 @@ def searcher(nmbr)
         result = "Never Heardof'em" 
     end     
   result
+
+  db.close if db
 end 
 ###############################################################
 ###############################################################
