@@ -5,12 +5,18 @@ enable 'sessions'
 	load './local_env.rb' if File.exists?('./local_env.rb')
 ########################################
 get '/' do
-	erb :input
+	msg = params[:msg] || ""	
+	erb :login, locals:{msg: msg}
 end
+#	erb :input
 ################################
 post '/get_nfo' do
+	u_name = params[:u_name]
+	p_word = params[:p_word]
   data = params[:data]
-	#makedabase()
+	#makedatable()
+	makelogintable()
+	#authorize(usrname, p_word)
 	add_entry(data)
 redirect '/return'
 end

@@ -1,18 +1,18 @@
+<!DOCTYPE html>
+<html>
 <%=msg%>
+<head></head>
+	<body>
 
-<h1> User Login </h1>
+		<h1> User Login </h1>
 
-
-
-
-
-
-<form method="post" action="login">
-		<h3 class="size">Username</h3><br>
-	<input type="text"  name="usrname"><br>
-		<h3 class="size">Password</h3><br>
-	<input type="Password" name="p_word"><br>
-			Logon?<br>
-
-	<input type="submit" value="Continue?"><br>
-</form>
+		<form method="post" action="login">
+				<h3>Username</h3><br>
+			<input type="text"  name="u_name" minlength="4" maxlength="25" required><br>
+				<h3>Password</h3><br>
+			<input type="Password" name="p_word" minlength="4" maxlength="25" required><br>
+					Log In?<br>
+			<input type="submit" value="Continue?"><br>
+		</form>
+	</body>
+</html>>
