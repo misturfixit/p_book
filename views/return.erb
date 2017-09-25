@@ -5,11 +5,14 @@
 		<table width = 90% height = 70%>
 		
 		<h2>search results::<br>
-			
-					<%=result%>
+			<%if result == ""%>
+			<%else%>
+				<%result.each do |r|%>
+					<%r.each do |res|%>
+						<%=res%>
+					<%end%>	<br>
 				<%end%>	<br>
-			<%end%>	<br>
-		
+			<%end%><br>
 			<form method="post" action="return">
         	<th>Select</th> 
           <th>First Name</th> 	
@@ -19,6 +22,9 @@
 					<th>State</th>
 					<th>ZipCode</th>
 					<th>Phone Number</th>
+			<%if list == ""%>
+
+			<%else%>
 				<%list.each do |row|%>
 					<tr>	
 						<td><input type="checkbox" name="awsd" value="<%=row['id']%>"></td>
@@ -31,6 +37,7 @@
 						<td><%=row['phone']%></td>
 					</tr><br>
 				<%end%>	
+			<%end%>
 		</table>		
 						Would you like to update an entry ?<br>
 					<input type="submit" value="doit"><br>

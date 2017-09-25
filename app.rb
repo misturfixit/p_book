@@ -6,7 +6,8 @@ enable 'sessions'
 	load './local_env.rb' if File.exists?('./local_env.rb')
 ########################################
 get '/' do
-	msg = params[:msg] || ""	
+	msg = params[:msg] || ""
+
 	erb :login, locals:{msg: msg}
 end
 #	erb :input
@@ -25,11 +26,13 @@ post '/login' do
   db = PG::Connection.new(wbinfo)
   authusr = db.exec("SELECT * FROM login WHERE u_name ='#{u_n}'")
   val = authusr.values.flatten
-	 # hashed_password = BCrypt::Password.create "val[2]"
+	  #hashed_password = BCrypt::Password.create "val[2]"
   if val.include?(p_w)
-      redirect '/get_nfo'
+  	msg = "logging in"
+      redirect '/get_nfo?msg='+msg
   else
-      redirect '/'
+  	msg = "invalid login"
+      redirect '/?msg='+msg
   end
  #  authorize(u_n, p_w)
  #  msg = params[:msg] || ""
@@ -50,6 +53,7 @@ post '/get_nfo' do
   data = params[:data]
 	#makedatable()
 	add_entry(data)
+
 redirect '/return'
 end
 # #######################################################
@@ -63,12 +67,33 @@ end
 ###############################
 get '/return' do
  	phown = params[:phown]
-	result = searcher(phown)
- 	result = params[:result]
-	  
-	  list = params[:list]	
-	erb :return, locals:{list:list,result:result} 
- 	
+
+	  if phown != nil
+			result = searcher(phown)
+	 #  	pbinfo = {
+		#     host: ENV['RDS_HOST'],
+		#     port:ENV['RDS_PORT'],
+		#     dbname:ENV['RDS_DB_NAME'],
+		#     user:ENV['RDS_USERNAME'],
+		#     password:ENV['RDS_PASSWORD']
+	 #  	db = PG::Connection.new(pbinfo)
+		# list = db.exec("SELECT * FROM public.pb")
+	 #  }
+		#result = check.values
+	  else
+	  		result = ""
+		end
+				pbinfo = {
+		    host: ENV['RDS_HOST'],
+		    port:ENV['RDS_PORT'],
+		    dbname:ENV['RDS_DB_NAME'],
+		    user:ENV['RDS_USERNAME'],
+		    password:ENV['RDS_PASSWORD']
+	  }	
+	  	db = PG::Connection.new(pbinfo)
+		list = db.exec("SELECT * FROM public.pb")
+	 
+	erb :return, locals:{list:list,result:result}  	
 end
 # #######################################
 post '/return' do
@@ -121,7 +146,7 @@ post '/changeit' do
 	db = PG::Connection.new(pbinfo)
 	if radio == 'update'
     db.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',street='#{street}',city='#{city}',state='#{state}',zip='#{zip}',phone='#{phone}' WHERE id = '1'")
-  		redirect '/return'
+  		redirect '/get_nfo'
   elsif radio == 'delete'
   		redirect '/return'
     db.exec("DELETE FROM  public.pb WHERE id = '#{awsd}'")

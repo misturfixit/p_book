@@ -1,5 +1,5 @@
 require 'pg'
-# require 'bcrypt'
+#require 'bcrypt'
 	load './local_env.rb' if File.exist?('./local_env.rb')
 #############################################################
 def makedatable()
@@ -72,7 +72,7 @@ def authorize(u_n, p_w)
     end  
   db.close if db
 
-     #p "#{v}whatdahelllssgoinonhere"
+    msg
 end 
 
 ##################################################################
@@ -88,8 +88,7 @@ def add_entry(data)
   }
   db = PG::Connection.new(pbinfo)
   db.exec("INSERT INTO pb(f_name,l_name,street,city,state,zip,phone)VALUES('#{data[0]}','#{data[1]}','#{data[2]}','#{data[3]}','#{data[4]}','#{data[5]}','#{data[6]}')");
-	#db.exec ("INSERT INTO public.pb(f_name,l_name,street,city,state,zip, phone)VALUES('jenny','jenny','ezee st','anything','aaannnddthen','hereitis','thereitis')");
-db.close if db		
+    
 end
 ######################################################################
 def searcher(nmbr)
@@ -107,10 +106,12 @@ def searcher(nmbr)
     else 
         result = "Never Heardof'em" 
     end     
+  db.close if db
   result
 
-  db.close if db
 end 
+	#db.exec ("INSERT INTO public.pb(f_name,l_name,street,city,state,zip, phone)VALUES('jenny','jenny','ezee st','anything','aaannnddthen','hereitis','thereitis')");
+#p "#{result}gggggggrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
 ###############################################################
 ###############################################################
 ###############################################################
