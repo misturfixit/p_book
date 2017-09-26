@@ -92,7 +92,7 @@ get '/return' do
 	  }	
 	  	db = PG::Connection.new(pbinfo)
 		list = db.exec("SELECT * FROM public.pb")
-	 
+
 	erb :return, locals:{list:list,result:result}  	
 end
 # #######################################
@@ -148,9 +148,8 @@ post '/changeit' do
     db.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',street='#{street}',city='#{city}',state='#{state}',zip='#{zip}',phone='#{phone}' WHERE id = '1'")
   		redirect '/get_nfo'
   elsif radio == 'delete'
-  		redirect '/return'
     db.exec("DELETE FROM  public.pb WHERE id = '#{awsd}'")
-    	redirect '/return'
+  		redirect '/return'
   else radio == 'cancel'
     	redirect '/'
   end

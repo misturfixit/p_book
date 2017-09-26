@@ -104,14 +104,14 @@ def searcher(nmbr)
     if look.num_tuples.zero? == false
         result =  look.values
     else 
-        result = "Never Heardof'em" 
+
+       result = {:Never=>'Heard',:of=>'em'}##so....i'm pretty proud of this one
     end     
   db.close if db
-  result
+ result
 
 end 
-	#db.exec ("INSERT INTO public.pb(f_name,l_name,street,city,state,zip, phone)VALUES('jenny','jenny','ezee st','anything','aaannnddthen','hereitis','thereitis')");
-#p "#{result}gggggggrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+	#
 ###############################################################
 ###############################################################
 ###############################################################

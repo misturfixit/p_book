@@ -2,18 +2,30 @@ head{
 	color:yellow;
 }
 h1{
-	color:red;
-}
-body{
-	text-align:center;
+  margin-left: 25%;
+  margin-right: 25%;
+  color: darkred; 
+  width: 16%;
+  height: 12%;
+  padding: 15px;
+  border:13px rgb(152,152,152);
+  border-style: inset;	
 	background-color: #39ac39;
 }
+body{
+	align-content: center;
+	text-align:center;
+  background-image: url(/imgs/phown.jpeg);	
+  background-repeat: no-repeat;
+  background-size: stretch;
+}
 td{
-	margin-left:20%;
+	margin-left:30%;
 	margin-right:20%;
   border:3px rgb(152,152,152);
   border-style: ridge;	
 }
 h2{
+	margin-left:30%;
 	color:purple;
 }
