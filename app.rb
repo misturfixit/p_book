@@ -22,18 +22,18 @@ post '/login' do
     dbname: ENV['RDS_DB_NAME'],
     user: ENV['RDS_USERNAME'],
     password: ENV['RDS_PASSWORD']
-  }
+  	}
   db = PG::Connection.new(wbinfo)
   authusr = db.exec("SELECT * FROM login WHERE u_name ='#{u_n}'")
   val = authusr.values.flatten
 	  #hashed_password = BCrypt::Password.create "val[2]"
-  if val.include?(p_w)
-  	msg = "logging in"
-      redirect '/get_nfo?msg='+msg
-  else
-  	msg = "invalid login"
-      redirect '/?msg='+msg
-  end
+		if val.include?(p_w)
+			msg = "logging in"
+				redirect '/get_nfo?msg='+msg
+		else
+			msg = "invalid login"
+				redirect '/?msg='+msg
+		end
  #  authorize(u_n, p_w)
  #  msg = params[:msg] || ""
  #  	if msg == "Logging On"
@@ -47,8 +47,7 @@ get '/get_nfo' do
 	#msg = params[:msg]
 	erb :input
 end
-##############################################################
-##################################################################
+
 post '/get_nfo' do
   data = params[:data]
 	#makedatable()
@@ -56,7 +55,7 @@ post '/get_nfo' do
 
 redirect '/return'
 end
-# #######################################################
+################################################################
 post '/search' do
 	phown = params[:phown]
 	#result = params[:result].to_s
@@ -116,14 +115,13 @@ get '/changeit' do
 	updt = db.exec("SELECT * FROM public.pb WHERE id = '#{awsd}'")
 	erb :change, locals:{updt:updt,awsd:awsd}
 end
-# # #######################################################
+# # #####################################################
 # get '/results' do
 # 	phown = params[:phown]
 # 	result = searcher(phown)
 
 # 	erb :change, locals:{result:result}
 # end	
-# #######################################################
 # #######################################################
 post '/changeit' do
   awsd = params[:awsd]
@@ -135,22 +133,21 @@ post '/changeit' do
   zip = params[:zip]
   phone = params[:phone]
 	radio = params[:radio]
- 
- pbinfo = {
-		    host: ENV['RDS_HOST'],
-		    port:ENV['RDS_PORT'],
-		    dbname:ENV['RDS_DB_NAME'],
-		    user:ENV['RDS_USERNAME'],
-		    password:ENV['RDS_PASSWORD']
-	  }
+ 	pbinfo = {
+		host: ENV['RDS_HOST'],
+		port:ENV['RDS_PORT'],
+		dbname:ENV['RDS_DB_NAME'],
+		user:ENV['RDS_USERNAME'],
+		password:ENV['RDS_PASSWORD']
+	}
 	db = PG::Connection.new(pbinfo)
-	if radio == 'update'
-    db.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',street='#{street}',city='#{city}',state='#{state}',zip='#{zip}',phone='#{phone}' WHERE id = '1'")
-  		redirect '/get_nfo'
-  elsif radio == 'delete'
-    db.exec("DELETE FROM  public.pb WHERE id = '#{awsd}'")
-  		redirect '/return'
-  else radio == 'cancel'
-    	redirect '/'
-  end
+		if radio == 'update'
+			db.exec("UPDATE public.pb SET f_name='#{f_name}',l_name='#{l_name}',street='#{street}',city='#{city}',state='#{state}',zip='#{zip}',phone='#{phone}' WHERE id = '1'")
+				redirect '/get_nfo'
+		elsif radio == 'delete'
+			db.exec("DELETE FROM  public.pb WHERE id = '#{awsd}'")
+				redirect '/return'
+		else radio == 'cancel'
+				redirect '/'
+		end
 end

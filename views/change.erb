@@ -7,7 +7,7 @@
 <body>
 
 	<form method="post" action="changeit">
-	    <%updt.each do |updt|%>
+	    <% updt.each do |updt| %>
         <input type="hidden" name="awsd" value="<%=awsd%>"> 
         <input type="text" name="f_name" value="<%=updt['f_name']%>">
         <input type="text" name="l_name" value="<%=updt['l_name']%>"><br>
@@ -19,7 +19,7 @@
           <input type="radio" name="radio" value="update">Update
           <input type="radio" name="radio" value="delete">Delete
           <input type="radio" name="radio" value="cancel">Cancel<br>
-      <%end%>
+      <% end %>
 		    <input type="submit" value="UpDate">
 	</form>
 </body>

@@ -1,5 +1,6 @@
 source "https://rubygems.org"
-ruby "2.4.1"
-gem 'sinatra', '~>1.4.0'
+# ruby "2.4.1"
+gem 'sinatra'
 gem 'pg'
-gem 'bcrypt'
+# gem 'bcrypt'
+gem 'selenium-webdriver'
